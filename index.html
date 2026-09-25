@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="hi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C P Fashion Showroom</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<script>
+const searchInput = document.getElementById("searchInput");
+const cards = document.querySelectorAll(".card");
+
+searchInput.addEventListener("input", function () {
+
+    const searchText = this.value.toLowerCase();
+
+    cards.forEach(function(card) {
+
+        const productName = card
+            .querySelector("h3")
+            .textContent
+            .toLowerCase();
+
+        if (productName.includes(searchText)) {
+            card.style.display = "block";
+        } else {
+            card.style.display = "none";
+        }
+
+    });
+});
+</script>
+<script>
+function showCategory(category) {
+    const products = document.querySelectorAll(".product-card");
+
+    products.forEach(function(product) {
+        if (category === "all" ||
+            product.dataset.category === category) {
+            product.style.display = "block";
+        } else {
+            product.style.display = "none";
+        }
+    });
+}
+</script>]
+<div class="rating">⭐⭐⭐⭐⭐ <span>4.8/5</span></div>
+<div id="productModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+
+        <img id="modalImage" src="" alt="Product">
+
+        <h2 id="modalName"></h2>
+        <p id="modalPrice"></p>
+        <p id="modalDescription"></p>
+
+        <a id="modalWhatsApp"
+           class="whatsapp-btn"
+           href="#"
+           target="_blank">
+           Order on WhatsApp
+        </a>
+    </div>
+</div>
+
+<script>
+const detailButtons = document.querySelectorAll(".details-btn");
+const modal = document.getElementById("productModal");
+const closeBtn = document.querySelector(".close");
+
+detailButtons.forEach(function(button) {
+
+    button.addEventListener("click", function(event) {
+        event.preventDefault();
+
+        const card = this.closest(".card");
+
+        const image = card.querySelector("img").src;
+        const name = card.querySelector("h3").textContent;
+        const price = card.querySelector("p").textContent;
+
+        document.getElementById("modalImage").src = image;
+        document.getElementById("modalName").textContent = name;
+        document.getElementById("modalPrice").textContent = price;
+        document.getElementById("modalDescription").textContent =
+            "Premium quality latest fashion collection.";
+
+        modal.style.display = "flex";
+    });
+
+});
+
+closeBtn.onclick = function() {
+    modal.style.display = "none";
+};
+
+window.onclick = function(event) {
+    if (event.target === modal) {
+        modal.style.display = "none";
+    }
+};
+</script>
+<section class="cart-section" id="cart">
+    <h2>🛒 Your Cart</h2>
+
+    <div id="cartItems">
+        <script>
+let cart = [];
+
+function addToCart(button) {
+
+</button>
+    const card = button.closest(".card");
+
+    const name = card.querySelector("h3").textContent;
+    const priceText = card.querySelector("p").textContent;
+    const price = Number(priceText.replace("₹", "").replace(",", ""));
+
+    cart.push({
+        name: name,
+        price: price
+    });
+
+    updateCart();
+}
+
+function updateCart() {
+
+    const cartItems = document.getElementById("cartItems");
+    const cartCount = document.getElementById("cartCount");
+    const cartTotal = document.getElementById("cartTotal");
+
+    cartCount.textContent = cart.length;
+
+    if (cart.length === 0) {
+        cartItems.innerHTML = "<p>Cart अभी खाली है।</p>";
+        cartTotal.textContent = "0";
+        return;
+    }
+
+    let total = 0;
+    let html = "";
+
+    cart.forEach(function(item, index) {
+
+        total += item.price;
+
+        html += `
+            <div class="cart-item">
+                <span>${item.name} - ₹${item.price}</span>
+                <button onclick="removeItem(${index})">❌</button>
+            </div>
+        `;
+    });
+
+    cartItems.innerHTML = html;
+    cartTotal.textContent = total;
+}
+
+function removeItem(index) {
+    cart.splice(index, 1);
+    updateCart();
+}
+
+function clearCart() {
+    cart = [];
+    updateCart();
+}<button class="order-cart-btn" onclick="orderCart()">
+    📱 WhatsApp पर Order करें
+<script>
+function orderCart() {
+
+    if (cart.length === 0) {
+        alert("पहले कोई product Cart में add करें।");
+        return;
+    }
+
+    let message = "Hello C P Fashion Showroom!%0A%0A";
+    message += "मैं ये products order करना चाहता/चाहती हूँ:%0A%0A";
+
+    let total = 0;
+
+    cart.forEach(function(item) {
+        message += "• " + item.name + " - ₹" + item.price + "%0A";
+        total += item.price;
+    });
+
+    message += "%0ATotal: ₹" + total;
+
+    const phone = "919649206179";
+
+    window.open(
+        "https://wa.me/" + phone + "?text=" + message,
+        "_blank"
+    );
+}
+</script>
+</button>
+
+</script>
+    </div>
+
+    <h3>Total: ₹<span id="cartTotal">0</span></h3>
+
+    <button class="clear-cart" onclick="clearCart()">
+        Clear Cart
+    </button>
+</section>
+<a class="floating-whatsapp"
+   href="https://wa.me/919649206179
+   target="_blank"
+   title="WhatsApp पर संपर्क करें">
+    💬
+</a>
+<section class="login-section" id="login">
+    <div class="login-box">
+        <h2>👤 Customer Login</h2>
+
+        <input type="text" placeholder=your naam">
+
+        <input type="email" placeholder="Email Address">
+
+        <input type="password" placeholder="Password">
+
+        <button type="button" onclick="loginMessage()">
+            Login
+        </button>
+
+        <p>New Customer? <a href="#">Create Account</a></p>
+    </div>
+</section>
+
+<script>
+function loginMessage() {
+    alert("Demo Login: Real account system अभी connected नहीं है।");
+}
+</script>
+<section class="promo-banner">
+    <div>
+        <p class="promo-small">LIMITED TIME OFFER</p>
+        <h2>🔥 Mega Fashion Sale</h2>
+        <p>Selected Collection पर शानदार offers</p>
+
+        <a href="#collection" class="promo-btn">
+            Shop Now →
+        </a>
+    </div>
+</section>
+
+<bo<script>
+function buyNow(button) {
+
+    const card = button.closest(".card");
+
+    const name = card.querySelector("h3").textContent;
+    const price = card.querySelector("p").textContent;
+
+    const message =
+        "Hello C P Fashion Showroom!%0A%0A" +
+        "मैं यह product order करना चाहता/चाहती हूँ:%0A" +
+        name + " - " + price;
+
+    const phone = "91XXXXXXXXXX";
+
+    window.open(
+        "https://wa.me/" + phone + "?text=" + message,
+        "_blank"
+    );
+}
+</script>dy>
+<script>
+let cartCount = 0;
+
+function addToCart(button) {
+    cartCount++;
+
+    alert("Product cart में add हो गया! 🛒\nCart में " 
+          + cartCount + " item है।");
+}
+</script>
+<header>
+    <h1>C P Fashion Showroom</h1>
+    <p>Latest Fashion • Best Collection • Best Quality</p>
+</header>
+<div class="search-box">
+    <input type="text" id="searchInput" placeholder="Dress खोजें...">
+</div>
+<nav>
+    <a href="#">Home</a>
+    <a href="#collection">Collection</a>
+    <a href="#contact">Contact</a>
+<a href="#cart">🛒 Cart (<span id="cartCount">0</span>)</a>
+</nav>
+<section class="hero">
+
+    <img src="images/showroom.jpg" alt="C P Fashion Showroom">
+
+    <div class="hero-content">
+        <h2>C P Fashion Showroom</h2>
+        <p>Latest Fashion Collection आपके लिए</p>
+
+        <a href="#collection" class="shop-btn">
+            Collection देखें
+        </a>
+    </div>
+
+</section>
+
+<section class="categories">
+    <h2>Shop By Category</h2>
+
+    <div class="category-box">
+        <button onclick="showCategory('all')">All</button>
+        <button onclick="showCategory('men')">Men's Wear</button>
+        <button onclick="showCategory('women')">Women's Wear</button>
+        <button onclick="showCategory('kids')">Kids Wear</button>
+    </div>
+</section>
+
+    </div>
+
+</section>
+<section class="collections" id="collection">
+
+    <h2>Our Collections</h2>
+<section class="collections" id="collection">
+
+    <h2>Our Collection</h2>
+<div class="cards">
+
+    <div class="card"><button class="cart-btn" onclick="addToCart(this)">
+    🛒 Add to Cart
+</button>
+
+<a href="#" class="details-btn">View Details</a>
+
+</button>
+<button class="buy-now-btn" onclick="buyNow(this)">
+    🛍️ Buy Now
+</button>
+<div class="card product-card" data-category="men">
+        <img src="images/shirt.jpg" alt="Shirt">
+        <h3>Premium Shirt</h3>
+        <p>₹799</p>
+        <a class="whatsapp-btn" href="https://wa.me/919649206179" target="_blank">
+            Order on WhatsApp
+        </a>
+    </div>
+
+    <div class="card">
+<button class="cart-btn" onclick="addToCart(this)">
+    🛒 Add to Cart
+</button>
+<button class="buy-now-btn" onclick="buyNow(this)">
+    🛍️ Buy Now
+</button>
+<button class="buy-now-btn" onclick="buyNow(this)">
+    🛍️ Buy Now
+</button>
+<div class="card product-card" data-category="men">
+        <img src="images/jeans.jpg" alt="Jeans">
+        <h3>Stylish Jeans</h3>
+        <p>₹999</p>
+        <a class="whatsapp-btn" href="https://wa.me/919649206179" target="_blank">
+            Order on WhatsApp
+        </a>
+    </div>
+
+    <div class="card">
+<button class="cart-btn" onclick="addToCart(this)">
+    🛒 Add to Cart
+</button>
+<button class="buy-now-btn" onclick="buyNow(this)">
+    🛍️ Buy Now
+</button>
+<div class="card product-card" data-category="women">
+        <img src="images/dress.jpg" alt="Dress">
+        <h3>Fashion Dress</h3>
+        <p>₹1,299</p>
+        <a class="whatsapp-btn" href="https://wa.me/919649206179 target="_blank">
+            Order on WhatsApp
+        </a>
+    </div>
+
+    <div class="card">
+<button class="cart-btn" onclick="addToCart(this)">
+    🛒 Add to Cart
+</button>
+<button class="buy-now-btn" onclick="buyNow(this)">
+    🛍️ Buy Now
+</button>
+<div class="card product-card" data-category="men">
+        <img src="images/shirt2.jpg" alt="Shirt">
+        <h3>New Collection Shirt</h3>
+        <p>₹899</p>
+        <a class="whatsapp-btn" href="https://wa.me/919649206179" target="_blank">
+            Order on WhatsApp
+        </a>
+    </div>
+
+</div>
+    <div class="cards">
+
+        <div class="card">
+<button class="cart-btn" onclick="addToCart(this)">
+    🛒 Add to Cart
+</button><button class="buy-now-btn" onclick="buyNow(this)">
+    🛍️ Buy Now
+</button>
+
+            <img src="images/shirt.jpg" alt="Shirt">
+            <h3>Premium Shirt</h3>
+            <p>₹799</p>
+            <a class="whatsapp-btn"
+href="https://wa.me/919649206179?text=Namaste%20C%20P%20Fashion%20Showroom%20se%20product%20ke%20baare%20mein%20jaankari%20chahiye."
+target="_blank">
+    Order on WhatsApp
+</a>
+        </div>
+
+        <div class="card">
+<button class="cart-btn" onclick="addToCart(this)">
+    🛒 Add to Cart
+</button>
+<button class="buy-now-btn" onclick="buyNow(this)">
+    🛍️ Buy Now
+</button>
+            <img src="images/jeans.jpg" alt="Jeans">
+            <h3>Stylish Jeans</h3>
+            <p>₹999</p>
+            <button>Order Now</button>
+        </div>
+
+        <div class="card">
+<button class="cart-btn" onclick="addToCart(this)">
+    🛒 Add to Cart
+</button>
+<button class="buy-now-btn" onclick="buyNow(this)">
+    🛍️ Buy Now
+</button>
+            <img src="images/dress.jpg" alt="Dress">
+            <h3>Fashion Dress</h3>
+            <p>₹1,299</p>
+            <button>Order Now</button>
+        </div>
+
+    </div>
+
+</section>
+    <div class="cards">
+
+        <div class="card">
+            <h3>👔 Men's Collection</h3>
+            <p>Shirts, T-Shirts, Jeans और Fashion Wear</p>
+        </div>
+
+        <div class="card">
+            <h3>👗 Women's Collection</h3>
+            <p>Latest Dresses, Suits और Fashion Wear</p>
+        </div>
+
+        <div class="card">
+            <h3>🧒 Kids Collection</h3>
+            <p>बच्चों के लिए शानदार कपड़ों का कलेक्शन</p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="contact" id="contact">
+
+    <h2>Contact C P Fashion Showroom</h2>
+
+    <p>📍 Address: Gangapur city </p>
+
+    <p>📞 Phone: </p>
+
+    <p>🕐 Opening Time: 10:00 AM – 9:00 PM</p>
+
+    <a class="call-btn" href="tel:9649206179">
+        📞 Call Now
+    </a>
+<section class="map-section">
+
+    <h2>Gangapur city </h2>
+
+    <!-- 322201  -->
+<section class="offers">
+
+    <h2>🔥 Special Offers</h2>
+
+    <div class="offer-box">
+
+        <div class="offer">
+            <h3>20% OFF</h3>
+            <p>Selected Men's Collection</p>
+        </div>
+
+        <div class="offer">
+            <h3>30% OFF</h3>
+            <p>Selected Women's Collection</p>
+        </div>
+
+        <div class="offer">
+            <h3>Special Collection</h3>
+            <p>Latest Fashion अब showroom में उपलब्ध</p>
+        </div>
+
+    </div>
+
+</section>
+</section>
+</section>
+<footer>
+    <p>© 2026 C P Fashion Showroom</p>
+</footer>
+<footer>
+    <h3>C P Fashion Showroom</h3>
+
+    <p>Latest Fashion • Best Collection • Best Quality</p>
+
+    <div class="social-links">
+        <a href="#" target="_blank">Instagram</a>
+        <a href="#" target="_blank">YouTube</a>
+        <a href="#" target="_blank">Facebook</a>
+        <a href="https://wa.me/919649206179" target="_blank">WhatsApp</a>
+    </div>
+
+    <p class="copyright">
+        © 2026 C P Fashion Showroom. All Rights Reserved.
+    </p>
+</footer>
+</body>
+</html>
